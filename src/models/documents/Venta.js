@@ -45,7 +45,7 @@ class Venta extends Model {
       }, // attributes
       {
         sequelize,
-        timestamps: false,
+        timestamps: true,
         tableName: "Venta",
       }
     );

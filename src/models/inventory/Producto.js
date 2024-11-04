@@ -16,7 +16,7 @@ class Producto extends Model {
           type: DataTypes.STRING,
         },
         descripcion: {
-          type: DataTypes.STRING,
+          type: DataTypes.TEXT,
         },
         garantia_cliente: {
           type: DataTypes.DOUBLE,
@@ -44,10 +44,12 @@ class Producto extends Model {
     this.hasMany(models.ProductoSerie, {
       foreignKey: "ProductoId",
       sourceKey: "id",
+      as: "productoserie",
     });
     models.ProductoSerie.belongsTo(this, {
       foreignKey: "ProductoId",
       targetKey: "id",
+      as: "producto",
     });
   }
 }

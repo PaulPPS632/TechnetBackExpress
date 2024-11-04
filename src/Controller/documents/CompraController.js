@@ -31,6 +31,22 @@ class CompraController {
     if (detalles.length == 0)
       return res.status(400).json({ message: "No hay productos en la compra" });
     try {
+      const seriesRegistradas = detalles.flatMap((detalle) => detalle.series);
+
+      // Verificar si alguna de las series ya existe en la base de datos
+      const seriesExistentes = await ProductoSerie.findAll({
+        where: {
+          sn: {
+            [Op.in]: seriesRegistradas,
+          },
+        },
+      });
+      if (seriesExistentes.length > 0) {
+        const seriesDuplicadas = seriesExistentes.map((serie) => serie.sn);
+        return res.status(400).json({
+          message: "Algunas series ya están registradas: " + seriesDuplicadas,
+        });
+      }
       const CompraRegist = await Compra.create({
         EntidadNegocioId: usuario_id,
         documento,

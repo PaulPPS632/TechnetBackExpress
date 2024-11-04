@@ -123,6 +123,7 @@ class ProductoController {
     if (!producto) {
       return res.status(404).json({ message: "Producto no encontrado" });
     }
+    console.log(producto);
     const productoResponse = {
       id: producto.id,
       nombre: producto.nombre,
@@ -131,10 +132,13 @@ class ProductoController {
       stock: producto.stock,
       precio: producto.precio,
       CategoriaMarcaId: producto.CategoriaMarcaId,
+      CategoriaMarca: producto.CategoriaMarca.nombre,
       SubCategoriaId: producto.SubCategoriaId,
+      SubCategoria: producto.SubCategorium.nombre,
       MarcaId: producto.CategoriaMarca.Marca.id,
+      Marca: producto.CategoriaMarca.Marca.nombre,
       CategoriaId: producto.SubCategorium.CategoriaId,
-      subcategoria_nombre: producto.subcategoria_nombre,
+      Categoria: producto.SubCategorium.Categorium.nombre,
       garantia_cliente: producto.garantia_cliente,
       garantia_total: producto.garantia_total,
       categoria_nombre: producto.categoria_nombre,
