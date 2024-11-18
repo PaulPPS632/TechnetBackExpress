@@ -13,6 +13,6 @@ EntidadRouter.get(
   EntidadController.getAllDashboard
 );
 EntidadRouter.put("/asignarrol", Authorization, EntidadController.UpdateRol);
-console.log("ENTIDADDDDDDD");
-console.log("EntidadRouter", EntidadRouter);
+EntidadRouter.get("/search", Authorization, EntidadController.Search);
+
 module.exports = EntidadRouter;

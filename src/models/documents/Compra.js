@@ -45,7 +45,7 @@ class Compra extends Model {
       }, // attributes
       {
         sequelize,
-        timestamps: false,
+        timestamps: true,
         tableName: "Compra",
       }
     );

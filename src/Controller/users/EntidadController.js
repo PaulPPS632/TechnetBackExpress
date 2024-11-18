@@ -209,6 +209,27 @@ class EntidadController {
       return res.status(400).json({ errorMessage: error });
     }
   }
+
+  async Search(req, res) {
+    const { search } = req.query;
+    console.log(search);
+    try {
+      const entidades = await Entidad.findAll({
+        where: {
+          [Op.or]: [
+            { nombre: { [Op.like]: `%${search}%` } },
+            { apellido: { [Op.like]: `%${search}%` } },
+            { documento: { [Op.like]: `%${search}%` } },
+          ],
+        },
+        include: { model: Rol, attributes: ["id", "nombre"] },
+      });
+      console.log(entidades);
+      return res.status(200).json(entidades);
+    } catch (error) {
+      return res.status(400).json({ errorMessage: error });
+    }
+  }
 }
 
 module.exports = new EntidadController();

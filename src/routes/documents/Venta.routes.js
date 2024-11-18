@@ -5,7 +5,8 @@ const VentaController = require("../../Controller/documents/VentaController.js")
 const VentaRoutes = Router();
 
 VentaRoutes.post("/", Authorization, VentaController.Register);
-VentaRoutes.get("/", VentaController.GetAll);
+VentaRoutes.get("/", Authorization, VentaController.getPaged);
+VentaRoutes.get("/:id", Authorization, VentaController.getById);
 module.exports = VentaRoutes;
 /**
  *     id: string;
