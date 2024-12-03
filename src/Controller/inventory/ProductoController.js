@@ -119,11 +119,9 @@ class ProductoController {
         },
       ],
     });
-    console.log(producto);
     if (!producto) {
       return res.status(404).json({ message: "Producto no encontrado" });
     }
-    console.log(producto);
     const productoResponse = {
       id: producto.id,
       nombre: producto.nombre,

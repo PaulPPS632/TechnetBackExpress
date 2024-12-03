@@ -5,6 +5,9 @@ const DetalleVenta = require("../../models/documents/DetalleVenta");
 const SerieDetalleVenta = require("../../models/documents/SerieDetalleVenta");
 const ProductoSerie = require("../../models/inventory/ProductoSerie");
 const Producto = require("../../models/inventory/Producto");
+const Categoria = require("../../models/inventory/Categoria");
+const SubCategoria = require("../../models/inventory/SubCategoria");
+const ReporteStockPDF = require("../../service/ReporteStockPDF");
 class ReportesController {
   async VentasxUsuario(req, res) {
     try {
@@ -114,6 +117,48 @@ class ReportesController {
         .status(500)
         .json({ message: "Error obteniendo productos más vendidos" });
     }
+  }
+  async StockProductos(req, res) {
+    const categorias = await Categoria.findAll();
+
+    const stockProductos = await Promise.all(
+      categorias.map(async (categoria) => {
+        const productos = await Producto.findAll({
+          include: [
+            {
+              model: SubCategoria,
+              required: true,
+              where: { CategoriaId: categoria.id },
+            },
+          ],
+          attributes: ["id", "nombre", "precio", "stock"],
+          where: {
+            stock: {
+              [Op.gt]: 0,
+            },
+          },
+        });
+        if (productos.length > 0) {
+          const totalStock = productos.reduce(
+            (total, producto) => total + producto.stock,
+            0
+          );
+
+          return {
+            nombre: categoria.nombre,
+            totalStock,
+            productos,
+          };
+        }
+        return null;
+      })
+    );
+    const categoriasConStock = stockProductos.filter(
+      (categoria) => categoria !== null
+    );
+    // const ruta = "";
+    ReporteStockPDF.createPdf(categoriasConStock, res);
+    //return res.status(200).json({ ruta: ruta, categoriasConStock });
   }
 }
 

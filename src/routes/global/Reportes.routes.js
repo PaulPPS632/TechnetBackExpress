@@ -7,4 +7,5 @@ ReportesRoutes.get(
   "/productos-mas-vendidos",
   ReportesController.ProductosMasVendidos
 );
+ReportesRoutes.get("/StockProductos", ReportesController.StockProductos);
 module.exports = ReportesRoutes;
