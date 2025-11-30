@@ -4,7 +4,7 @@ class ArchivoController {
     try {
       const tipoarchivo = req.body.tipo;
       if (req.files) {
-        const prefijo = `https://${process.env.DB_HOST}/api/uploads`;
+        const prefijo = `${process.env.PATH_ARCHIVOS}/api/uploads`;
         const archivosSecundarios = await Promise.all(
           req.files.files.map(async (file) => {
             return await Archivo.create({
