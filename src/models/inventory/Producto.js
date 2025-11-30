@@ -30,6 +30,9 @@ class Producto extends Model {
         precio: {
           type: DataTypes.DOUBLE,
         },
+        estado: {
+          type: DataTypes.STRING,
+        },
       }, // attributes
       {
         sequelize,
